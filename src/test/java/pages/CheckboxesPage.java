@@ -42,4 +42,8 @@ public class CheckboxesPage {
             clickCheckbox(index);
         }
     }
+
+    public void waitForCheckedState(int index, boolean state) {
+        wait.until(ExpectedConditions.elementSelectionStateToBe(checkboxes().get(index), state));
+    }
 }
