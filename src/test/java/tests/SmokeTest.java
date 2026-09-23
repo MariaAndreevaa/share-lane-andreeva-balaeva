@@ -21,7 +21,7 @@ public class SmokeTest extends BaseTest {
     public void homePageShowsWelcomeHeading() {
         WebElement heading = wait.until(
                 ExpectedConditions.visibilityOfElementLocated(By.tagName("h1")));
-        assertEquals(heading.getText(), "Welcome to the Internet",
+        assertEquals(heading.getText(), "Welcome to the-internet",
                 "На главной должен быть заголовок 'Welcome to the Internet'");
     }
 }
