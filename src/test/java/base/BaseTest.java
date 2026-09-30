@@ -8,6 +8,8 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 
 import java.time.Duration;
+import java.util.HashMap;
+import java.util.Map;
 
 public class BaseTest {
 
@@ -20,6 +22,17 @@ public class BaseTest {
     public void setUp() {
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--start-maximized");
+
+        // Chrome показывает модальную для страницы всплывашку «пароль скомпрометирован»,
+        // если введённый пароль найден в базах утечек (демо-пароль Swag Labs публичен).
+        // Пока всплывашка открыта, клики по странице проглатываются, поэтому
+        // проверку утечек и менеджер паролей отключаем в настройках профиля.
+        Map<String, Object> prefs = new HashMap<>();
+        prefs.put("credentials_enable_service", false);
+        prefs.put("profile.password_manager_enabled", false);
+        prefs.put("profile.password_manager_leak_detection", false);
+        options.setExperimentalOption("prefs", prefs);
+        options.addArguments("--disable-features=PasswordLeakDetection");
 
         driver = new ChromeDriver(options);
 
