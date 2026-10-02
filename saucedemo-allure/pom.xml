@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.andreeva</groupId>
-    <artifactId>saucedemo-allure-tests</artifactId>
+    <artifactId>saucedemo-allure-andreeva-balaeva</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
 
