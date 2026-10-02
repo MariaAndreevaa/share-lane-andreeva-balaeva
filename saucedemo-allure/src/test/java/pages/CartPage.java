@@ -39,7 +39,15 @@ public class CartPage extends BasePage {
     public void waitForCartEmpty() {
         wait.until(ExpectedConditions.numberOfElementsToBe(cartItem, 0));
     }
+    @Step("Получить количество товаров в корзине")
+    public int getCartItemsCount() {
+        return driver.findElements(cartItem).size();
+    }
 
+    @Step("Проверить видимость счётчика корзины")
+    public boolean isCartBadgeVisible() {
+        return driver.findElements(cartBadge).size() > 0;
+    }
     @Step("Дождаться исчезновения счётчика корзины")
     public void waitForCartBadgeDisappears() {
         wait.until(ExpectedConditions.invisibilityOfElementLocated(cartBadge));
