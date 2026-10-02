@@ -1,5 +1,6 @@
 package base;
 
+import io.qameta.allure.Allure;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -34,10 +35,18 @@ public abstract class BaseTest {
     @BeforeMethod
     public void setUp(@Optional("chrome") String browser,
                       @Optional("false") String headless) {
+        // Системные свойства Maven имеют приоритет над параметрами testng.xml/@Optional
+        browser = System.getProperty("browser", browser);
+        headless = System.getProperty("headless", headless);
+
         browserUsed = browser;
         driver = createDriver(browser, Boolean.parseBoolean(headless));
         driver.manage().window().maximize();
         wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+
+        // Метка браузера — видна в карточке каждого теста в Allure-отчёте
+        Allure.label("browser", browserUsed);
+
         driver.get(BASE_URL);
     }
 
@@ -87,7 +96,6 @@ public abstract class BaseTest {
                     + System.lineSeparator();
             Files.writeString(resultsDir.resolve("environment.properties"), content);
         } catch (IOException e) {
-            // Не роняем сборку из-за проблемы с отчётом — просто пишем в консоль
             System.err.println("Не удалось записать environment.properties: " + e.getMessage());
         }
     }
